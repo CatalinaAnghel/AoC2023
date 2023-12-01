@@ -5,6 +5,6 @@
         }
     },
     "scripts": {
-        "run": "php index.php"
+        "help-elves": "php index.php"
     }
 }
