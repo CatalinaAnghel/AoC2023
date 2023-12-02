@@ -4,22 +4,15 @@ namespace AdventOfCode2023\Day2;
 
 use AdventOfCode2023\Helper\FileReader;
 
-class Part1
+class Part1 extends AbstractSolution
 {
-    public const INPUT_FILE_PATH = 'day2/';
-    public const GAME_RESULTS_PATTERN = '#(?:([0-9]+ {1}((blue)|(green)|(red)){1}))#';
-    public const GAME_PATTERN = '#(Game [0-9]+\\: )#';
-
-    public const RED_COLOR = 'red';
-    public const GREEN_COLOR = 'green';
-    public const BLUE_COLOR = 'blue';
-
     public function __construct(
-        private string $fileName,
         private int $redCubesNumber,
         private int $blueCubesNumber,
-        private int $greenCubesNumber
+        private int $greenCubesNumber,
+        string $fileName
     ) {
+        parent::__construct($fileName);
     }
 
 
@@ -41,7 +34,7 @@ class Part1
     private function getFileContent(): array
     {
         $fileReader = new FileReader;
-        return $fileReader->readLineByLine(self::INPUT_FILE_PATH . $this->fileName);
+        return $fileReader->readLineByLine(self::INPUT_FILE_PATH . $this->getFileName());
     }
 
     private function getGameNumber(string $line): int
@@ -55,8 +48,7 @@ class Part1
     private function validateGame(string $line): bool
     {
         $valid = false;
-        preg_match_all(self::GAME_RESULTS_PATTERN, $line, $matches);
-        foreach ($matches[0] as $match) {
+        foreach ($this->getMatches($line)[0] as $match) {
             [$extractedNumberOfCubes, $color] = explode(' ', $match);
             switch ($color) {
                 case self::RED_COLOR:
