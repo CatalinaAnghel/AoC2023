@@ -2,8 +2,13 @@
 
 namespace AdventOfCode2023\Day2;
 
-abstract class AbstractSolution
+use AdventOfCode2023\Helper\ReaderTrait;
+use AdventOfCode2023\Helper\SolutionInterface;
+
+abstract class AbstractSolution implements SolutionInterface
 {
+    use ReaderTrait;
+
     public const INPUT_FILE_PATH = 'day2/';
     public const GAME_RESULTS_PATTERN = '#(?:([0-9]+ {1}((blue)|(green)|(red)){1}))#';
     public const GAME_PATTERN = '#(Game [0-9]+\\: )#';
@@ -28,6 +33,4 @@ abstract class AbstractSolution
 
         return $matches;
     }
-
-    abstract public function solve(): int;
 }

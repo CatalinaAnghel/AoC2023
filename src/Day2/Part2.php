@@ -16,15 +16,6 @@ class Part2 extends AbstractSolution
         return $sum;
     }
 
-    /**
-     * @return string[]
-     */
-    private function getFileContent(): array
-    {
-        $fileReader = new FileReader;
-        return $fileReader->readLineByLine(self::INPUT_FILE_PATH . $this->getFileName());
-    }
-
     private function computeGamePower(string $line): int
     {
         $maxNumberOfRedCubes = 0;
