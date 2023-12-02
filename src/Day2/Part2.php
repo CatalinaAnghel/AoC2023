@@ -18,30 +18,19 @@ class Part2 extends AbstractSolution
 
     private function computeGamePower(string $line): int
     {
-        $maxNumberOfRedCubes = 0;
-        $maxNumberOfGreenCubes = 0;
-        $maxNumberOfBlueCubes = 0;
-        
+        $cubeMaxNumbers = [
+            self::RED_COLOR => 0,
+            self::GREEN_COLOR => 0,
+            self::BLUE_COLOR => 0
+        ];
+
         foreach ($this->getMatches($line)[0] as $match) {
             [$extractedNumberOfCubes, $color] = explode(' ', $match);
-            switch ($color) {
-                case self::RED_COLOR:
-                    if ((int) $extractedNumberOfCubes > $maxNumberOfRedCubes) {
-                        $maxNumberOfRedCubes = (int) $extractedNumberOfCubes;
-                    }
-                    break;
-                case self::GREEN_COLOR:
-                    if ((int) $extractedNumberOfCubes > $maxNumberOfGreenCubes) {
-                        $maxNumberOfGreenCubes = (int) $extractedNumberOfCubes;
-                    }
-                    break;
-                case self::BLUE_COLOR:
-                    if ((int) $extractedNumberOfCubes > $maxNumberOfBlueCubes) {
-                        $maxNumberOfBlueCubes = (int) $extractedNumberOfCubes;
-                    }
-                    break;
+            if (isset($cubeMaxNumbers[$color])) {
+                $cubeMaxNumbers[$color] = max($cubeMaxNumbers[$color], (int) $extractedNumberOfCubes);
             }
         }
-        return $maxNumberOfBlueCubes * $maxNumberOfRedCubes * $maxNumberOfGreenCubes;
+
+        return array_product($cubeMaxNumbers);
     }
 }
