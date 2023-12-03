@@ -16,33 +16,8 @@ class Part1 extends AbstractSolution
 
     public function solve(): int
     {
-        $content = $this->getFileContent();
+        $content = $this->parseFileContent();
         return array_sum($this->filterPartNumbers($content));
-    }
-
-    protected function getFileContent(): array
-    {
-        $parsedContent = [
-            'partNumbers' => [],
-            'symbols' => []
-        ];
-        $content = parent::getFileContent();
-        foreach ($content as $lineNumber => $line) {
-            $matches = [];
-            $numberOfCharacters = strlen($line);
-            preg_match_all('~(?:[^\\.\\d\\s]|([0-9]+))~', $line, $matches, PREG_OFFSET_CAPTURE);
-            foreach ($matches[0] as $match) {
-                if(!empty($match[0])){
-                    $key = is_numeric($match[0]) ? 'partNumbers' : 'symbols';
-                    $parsedContent[$key][] = new ElementDto(
-                        $match[0],
-                        $lineNumber,
-                        $match[1]
-                    );
-                }
-            }
-        }
-        return $parsedContent;
     }
 
     /**
