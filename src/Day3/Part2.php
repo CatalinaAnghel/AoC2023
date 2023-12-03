@@ -6,7 +6,7 @@ namespace AdventOfCode2023\Day3;
 class Part2 extends AbstractSolution
 {
     public const GEAR_SYMBOL = '*';
-    
+
     public function __construct(
         string $fileName
     ) {
@@ -26,11 +26,11 @@ class Part2 extends AbstractSolution
     private function getGearRatios(array $content): array
     {
         $gearRatios = [];
-        $gears = array_filter($content['symbols'], static function (ElementDto $symbol, int $key){
+        $gears = array_filter($content[self::SYMBOLS_KEY], static function (ElementDto $symbol, int $key){
             return $symbol->value === self::GEAR_SYMBOL;
         }, ARRAY_FILTER_USE_BOTH);
         foreach ($gears as $gear) {
-            $adjacentNumbers = $this->getAdjacentNumber($content['partNumbers'], $gear);
+            $adjacentNumbers = $this->getAdjacentNumber($content[self::PART_NUMBERS_KEY], $gear);
             $gearRatio = 1;
             if(count($adjacentNumbers) > 1){
                 foreach ($adjacentNumbers as $number){

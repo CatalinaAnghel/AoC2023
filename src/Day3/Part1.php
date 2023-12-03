@@ -5,8 +5,6 @@ namespace AdventOfCode2023\Day3;
 
 class Part1 extends AbstractSolution
 {
-    public const IGNORED_SYMBOL = '.';
-
     public function __construct(
         string $fileName
     ) {
@@ -26,8 +24,8 @@ class Part1 extends AbstractSolution
     private function filterPartNumbers(array $content): array
     {
         $partNumbers = [];
-        foreach ($content['partNumbers'] as $possiblePartNumber) {
-            $adjacentSymbols = $this->getAdjacentSymbol($content['symbols'], $possiblePartNumber);
+        foreach ($content[self::PART_NUMBERS_KEY] as $possiblePartNumber) {
+            $adjacentSymbols = $this->getAdjacentSymbol($content[self::SYMBOLS_KEY], $possiblePartNumber);
             if(count($adjacentSymbols)){
                 $partNumbers[] = (int) $possiblePartNumber->value;
             }

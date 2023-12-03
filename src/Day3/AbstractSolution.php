@@ -10,6 +10,9 @@ abstract class AbstractSolution implements SolutionInterface
 
     public const INPUT_FILE_PATH = 'day3/';
     public const IGNORED_SYMBOL = '.';
+    public const PART_NUMBERS_KEY = 'partNumbers';
+    public const SYMBOLS_KEY = 'symbols';
+    public const GEAR_PATTERN = '~(?:[^\\.\\d\\s]|([0-9]+))~';
 
     public function __construct(
         private string $fileName
@@ -23,16 +26,16 @@ abstract class AbstractSolution implements SolutionInterface
     protected function parseFileContent(): array
     {
         $parsedContent = [
-            'partNumbers' => [],
-            'symbols' => []
+            self::PART_NUMBERS_KEY => [],
+            self::SYMBOLS_KEY => []
         ];
         $content = $this->getFileContent();
         foreach ($content as $lineNumber => $line) {
             $matches = [];
-            preg_match_all('~(?:[^\\.\\d\\s]|([0-9]+))~', $line, $matches, PREG_OFFSET_CAPTURE);
+            preg_match_all(self::GEAR_PATTERN, $line, $matches, PREG_OFFSET_CAPTURE);
             foreach ($matches[0] as $match) {
                 if(!empty($match[0])){
-                    $key = is_numeric($match[0]) ? 'partNumbers' : 'symbols';
+                    $key = is_numeric($match[0]) ? self::PART_NUMBERS_KEY : self::SYMBOLS_KEY;
                     $parsedContent[$key][] = new ElementDto(
                         $match[0],
                         $lineNumber,
