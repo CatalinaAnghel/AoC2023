@@ -17,14 +17,14 @@ class Part2 extends AbstractSolution
         $content = $this->getFileContent();
         $numberOfCards = count($content);
         foreach ($content as $key => $card) {
-            $cards[$key + 1] = isset($cards[$key + 1])? $cards[$key + 1] + 1: 1;
+            $cards[$key] = isset($cards[$key])? $cards[$key] + 1: 1;
             $commonNumbers = $this->getWinningNumbers($card);
             $numberOfWonCards = count($commonNumbers);
             if ($numberOfWonCards) {
-                for($cardIterator = $key + 2; $cardIterator <= min([$numberOfCards, $key + $numberOfWonCards]) + 1; $cardIterator++){
+                for($cardIterator = $key + 1; $cardIterator <= min([$numberOfCards, $key + $numberOfWonCards]); $cardIterator++){
                     $cards[$cardIterator] = isset($cards[$cardIterator])? 
-                    $cards[$cardIterator] + $cards[$key + 1]: 
-                    $cards[$key + 1];
+                    $cards[$cardIterator] + $cards[$key]: 
+                    $cards[$key];
                 }
             }
         }
