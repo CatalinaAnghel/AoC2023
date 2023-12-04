@@ -1,6 +1,7 @@
 <?php
 
 namespace AdventOfCode2023\Day4;
+
 use AdventOfCode2023\Helper\ReaderTrait;
 use AdventOfCode2023\Helper\SolutionInterface;
 
@@ -16,10 +17,20 @@ abstract class AbstractSolution implements SolutionInterface
 
     public function __construct(
         private string $fileName
-    ){}
+    ) {
+    }
 
     public function getFileName(): string
     {
         return $this->fileName;
+    }
+
+    protected function getWinningNumbers(string $card): array
+    {
+        $card = preg_replace(self::CARD_PATTERN, '', $card);
+        [$winningNumbersString, $chosenNumbersString] = explode(' | ', $card);
+        $winningNumbers = explode(' ', $winningNumbersString);
+        $chosenNumbers = explode(' ', $chosenNumbersString);
+        return array_intersect($winningNumbers, $chosenNumbers);
     }
 }

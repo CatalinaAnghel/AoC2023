@@ -16,11 +16,7 @@ class Part1 extends AbstractSolution
         $points = 0;
         $content = $this->getFileContent();
         foreach($content as $card){
-            $card = preg_replace(self::CARD_PATTERN, '', $card);
-            [$winningNumbersString, $chosenNumbersString] = explode(' | ', $card);
-            $winningNumbers = explode(' ', $winningNumbersString);
-            $chosenNumbers = explode(' ', $chosenNumbersString);
-            $commonNumbers = array_intersect($winningNumbers, $chosenNumbers);
+            $commonNumbers = $this->getWinningNumbers($card);
             if(!empty($commonNumbers)){
                 $points += pow(2, count($commonNumbers) - 1);
             }
